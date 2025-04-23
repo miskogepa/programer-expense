@@ -12,7 +12,21 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const name = expenseNameInput.value.trim();
     const amount = parseFloat(expenseAmountInput.value.trim());
+
+    if (name !== "" && !isNaN(amount) && amount > 0) {
+      const newExpense = {
+        id: Date.now(),
+        name: name,
+        amount: amount,
+      };
+      expenses.push(newExpense);
+      saveExpensesToLocal();
+    }
   });
 
   function calculateTotal() {}
+
+  function saveExpensesToLocal() {
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }
 });
