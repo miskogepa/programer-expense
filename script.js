@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const expenseList = document.getElementById("expense-list");
   const totalAmountDisplay = document.getElementById("total-amount");
 
-  let expenses = [];
+  let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   let totalAmount = calculateTotal();
+
+  renderExpenses();
 
   expenseForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -30,7 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function renderExpenses() {}
+  function renderExpenses() {
+    expenseList.innerHTML = "";
+    expenses.forEach((expense) => {
+      const li = document.createElement("li");
+      li.innerHTML = `${expense.name} -$${expense.amount}<button data-id="${expense.id}">Delete</button>`;
+      expenseList.appendChild(li);
+    });
+  }
 
   //koristimo metodu Array.reduce()
   function calculateTotal() {
