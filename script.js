@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
         amount: amount,
       };
       expenses.push(newExpense);
+      renderExpenses();
       saveExpensesToLocal();
+      updateTotal();
 
       //clear input
       expenseNameInput.value = "";
@@ -28,9 +30,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  function calculateTotal() {}
+  function renderExpenses() {}
+
+  //koristimo metodu Array.reduce()
+  function calculateTotal() {
+    return expenses.reduce((sum, expenses) => sum + expenses.amount, 0);
+  }
 
   function saveExpensesToLocal() {
     localStorage.setItem("expenses", JSON.stringify(expenses));
+  }
+
+  function updateTotal() {
+    totalAmount = calculateTotal();
+    totalAmountDisplay.textContent = totalAmount.toFixed(2);
   }
 });
